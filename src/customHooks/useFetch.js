@@ -8,7 +8,7 @@ export const useFetch = url => {
         return () => {
             isCurrent.current = false;
         };
-    }, [isCurrent])
+    }, [isCurrent]);
 
     useEffect(() => {
         setState(state => ({data: state.data, loading: true}));
@@ -16,11 +16,9 @@ export const useFetch = url => {
         fetch(url)
             .then(response => response.text())
             .then(data => {
-                setTimeout(() => {
-                    if (isCurrent.current) {
-                        setState({data, loading: false})
-                    }
-                }, 2000);
+                if (isCurrent.current) {
+                    setState({data, loading: false});
+                }
             });
     }, [url]);
 

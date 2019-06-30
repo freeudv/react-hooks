@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useFetch} from './customHooks/useFetch';
+import {useMeasure} from './customHooks/useMeasure'
 
 export default function Hello() {
     const [count, setCount] = useState(() =>
@@ -18,10 +19,18 @@ export default function Hello() {
         };
     }, []);
 
+    const [rect, divRef] = useMeasure([data])
+
     return (
         <div>
-            <div>{loading ? '...Loading' : data}</div>
-            <div>{count}</div>
+            <div style={{display: 'flex'}}>
+                <div ref={divRef}>{loading ? '...Loading' : data}</div>
+            </div>
+
+            <pre>{JSON.stringify(rect, null, 2)}</pre>
+
+            <div>count: {count}</div>
+
             <button onClick={() => setCount(c => c + 1)}>
                 increment count
             </button>
